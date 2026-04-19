@@ -13,8 +13,7 @@ async function bootstrap() {
     logger,
   });
 
-  // API prefix
-  app.setGlobalPrefix('api');
+  // No global prefix - controllers already have 'api' prefix
 
   // Security: Helmet
   app.use(
