@@ -7,7 +7,7 @@ import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 
 @ApiTags('Users')
 @ApiBearerAuth()
-@Controller('api/admin/users')
+@Controller('admin/users')
 @UseGuards(JwtAuthGuard, RolesGuard)
 @Roles('SUPER_ADMIN')
 export class UsersController {
