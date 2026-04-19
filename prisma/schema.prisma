@@ -1,0 +1,90 @@
+// filepath: prisma/schema.prisma
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  SUPER_ADMIN
+  EDITOR
+  VIEWER
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  name      String?
+  role      Role     @default(VIEWER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Devis {
+  id            String   @id @default(uuid())
+  reference     String?  @unique
+  clientName    String
+  clientEmail   String
+  clientPhone   String?
+  company       String?
+  services      String[] @default([])
+  location      String
+  address       String?
+  postalCode    String?
+  city          String?
+  description   String      @db.Text
+  urgency       String      @default("NORMAL")
+  status        String      @default("NEW")
+  amount        String?
+  assignedToId  String?
+  isActive      Boolean     @default(true)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+}
+
+model Contact {
+  id        String   @id @default(uuid())
+  name      String
+  email     String
+  phone     String?
+  subject   String?
+  message   String   @db.Text
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Project {
+  id          String   @id @default(uuid())
+  title       String
+  description String   @db.Text
+  imageUrl    String?
+  category    String?
+  client      String?
+  year        Int?
+  featured    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Service {
+  id          String   @id @default(uuid())
+  title       String
+  description String   @db.Text
+  icon        String?
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Stats {
+  id        String   @id @default(uuid())
+  key       String   @unique
+  value     Int      @default(0)
+  label     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
